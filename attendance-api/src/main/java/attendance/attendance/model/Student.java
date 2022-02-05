@@ -10,10 +10,10 @@ import javax.persistence.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Student {
     @Id
-    @JsonProperty("sis_user_id")
+    @JsonProperty("content")
     private int studentId;
 
-    @JsonProperty("id")
+    @JsonProperty("user_id")
     private int canvasId;
 
     @OneToOne
@@ -22,6 +22,30 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student ID: " + studentId + " Canvas ID: " + canvasId;
+        return "Student ID: " + studentId + " Canvas ID: " + canvasId + "Lab: " + lab;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+
+    public int getCanvasId() {
+        return canvasId;
+    }
+
+    public void setCanvasId(int canvasId) {
+        this.canvasId = canvasId;
+    }
+
+    public Lab getLab() {
+        return lab;
+    }
+
+    public void setLab(Lab lab) {
+        this.lab = lab;
     }
 }

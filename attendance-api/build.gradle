@@ -19,7 +19,7 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.1'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux:2.6.3'
+	implementation 'org.jsoup:jsoup:1.14.3'
 }
 
 test {
