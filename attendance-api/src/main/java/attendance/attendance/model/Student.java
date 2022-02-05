@@ -16,9 +16,8 @@ public class Student {
     @JsonProperty("user_id")
     private int canvasId;
 
-    @OneToOne
-    @JoinColumn(name = "name")
-    private Lab lab;
+
+    private String lab;
 
     @Override
     public String toString() {
@@ -41,11 +40,12 @@ public class Student {
         this.canvasId = canvasId;
     }
 
-    public Lab getLab() {
+    public String getLab() {
         return lab;
     }
 
-    public void setLab(Lab lab) {
+    public void setLab(String lab) {
         this.lab = lab;
     }
+
 }

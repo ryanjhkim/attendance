@@ -1,5 +1,6 @@
 package attendance.attendance.service;
 
+import attendance.attendance.model.CanvasConfig;
 import attendance.attendance.model.LabSection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,8 +22,7 @@ import java.util.*;
 @Service
 public class LabService {
 
-    @GetMapping("/get/labs")
-    public List<LabSection> getLabs() {
+    public List<LabSection> getLabs(String currentTerm) {
         List<LabSection> sections = new ArrayList<>();
 
         try {
@@ -49,7 +49,7 @@ public class LabService {
                 String activity = cols.get(fieldToIdx.get("Activity")).text();
                 String term = cols.get(fieldToIdx.get("Term")).text();
 
-                if ("Laboratory".equals(activity) && "1".equals(term)) {
+                if ("Laboratory".equals(activity) && currentTerm.equals(term)) {
                    LabSection section = parseLabSection(fieldToIdx, cols, prevSectionName);
                    sections.add(section);
                    prevSectionName = section.getName();
