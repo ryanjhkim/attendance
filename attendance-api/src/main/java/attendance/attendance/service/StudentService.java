@@ -10,7 +10,10 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import utils.LinkHeaderParser;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
@@ -47,6 +50,15 @@ public class StudentService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        List<String> linkHeaders = getLinkHeader(resp);
+        String nextLink = getNextLink(linkHeaders);
+
+        if (LinkHeaderParser.LAST_LINK.equals(nextLink)) {
+            return;
+        }
+
+        addStudentIds(nextLink, token, studentMap);
     }
 
     private void addStudentLabs(String url, String token, Map<Integer, Student> studentMap) {
@@ -65,6 +77,14 @@ public class StudentService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        List<String> linkHeaders = getLinkHeader(resp);
+        String nextLink = getNextLink(linkHeaders);
+
+        if (LinkHeaderParser.LAST_LINK.equals(nextLink)) {
+            return;
+        }
+        addStudentLabs(nextLink, token, studentMap);
     }
 
     private ResponseEntity<String> getRequestStudents(String url, String token) {
@@ -74,6 +94,19 @@ public class StudentService {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
         return restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+    }
+
+    private List<String> getLinkHeader(ResponseEntity<String> resp) {
+        return resp.getHeaders().get("Link");
+    }
+
+    private String getNextLink(List<String> linkHeaders) {
+        if (linkHeaders == null || linkHeaders.isEmpty())
+            return "";
+
+        String links = URLDecoder.decode(linkHeaders.get(0), StandardCharsets.UTF_8);
+        Map<String, String> linkMap = LinkHeaderParser.parseLinkHeader(links);
+        return LinkHeaderParser.getNext(linkMap);
     }
 
 //    private String getStudentsHelper(String url, List<Student> students) {

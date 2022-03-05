@@ -12,7 +12,7 @@ public class LinkHeaderParser {
     public static boolean hasNext(Map<String, String> link) {
         return link.containsKey("next");
     }
-
+    public static final String LAST_LINK = "";
     public static String getNext(Map<String, String> links) {
         return hasNext(links) ? links.get("next") : "";
     }
