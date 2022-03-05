@@ -1,7 +1,6 @@
 package attendance.attendance.service;
 
 import attendance.attendance.model.CanvasConfig;
-import attendance.attendance.model.Lab;
 import attendance.attendance.model.Student;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
