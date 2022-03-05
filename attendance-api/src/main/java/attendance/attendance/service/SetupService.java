@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 import java.util.List;
 
-@RestController
 @Service
 public class SetupService {
     private ObjectMapper mapper;
@@ -39,10 +38,7 @@ public class SetupService {
         mapper = new ObjectMapper();
     }
 
-    @GetMapping("/setup")
-    public void setup(@RequestHeader Map<String, String> headers,
-                      @RequestParam(name = "course_code") String courseCode,
-                      @RequestParam(name="term") String term) {
+    public void setup(Map<String, String> headers, String courseCode, String term) {
         String token = headers.get("authorization").replaceFirst("^Bearer ", "");
         CanvasConfig config = new CanvasConfig();
         config.setCourseCode(courseCode);
